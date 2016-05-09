@@ -28,3 +28,7 @@ flipBrick([_|FlipBricks], (C1, X2, Y2), Brick):-
 	flipBrick(FlipBricks, (C1, X2, Y2), Brick).
 
 flipBrick([], Brick, Brick).
+
+%%%%%%%%%%%%%%%%%%%%% MAKE MOVES %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+makemoves(Color, Board, N, Moves, NewBoard):-
