@@ -26,9 +26,21 @@ findMove(C, Board, Move):-
 	findClose(Board, ColorList, All),
 	flatten(All, Move), !.
 
+checkMoveMain(C, Board, [(X, Y, Dir)|ColorList], [OKMove|Move]):-
+	checkMove((C, X, Y), Board, OKMove, Dir).
 
-checkMove((C, X1, Y1), Board, [(X1, Y1, Dir)|Move], left):-
-	checkChain((C, X1, Y1), Board, (C1, X2, Y2), Dir),
+
+
+checkMove((C, X1, Y1), Board, OKMove, left):-
+	validInput(C, X1, Y1, Board),
+	checkChain((C, X1, Y1), Board, (C1, _, _), left),
 	C == C1,
-	checkMain((C1, X2, Y2), Board, NextBrick, Dir).
+	checkMove((C, X1+1, Y1), Board, OKMove, left).
+
+checkMove((C, X1, Y1), Board, [(C1, X2, Y2)|OKMove], left):-
+	validInput(C, X1, Y1, Board),
+	checkChain((C, X1, Y1), Board, (C1, X2, Y2), left),
+	\+ member((C1, X2, Y2), Board).
+
+
 
