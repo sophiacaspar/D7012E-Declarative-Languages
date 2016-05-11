@@ -2,12 +2,10 @@
 
 %makemove(black, [(white,c,3),(white,d,3),(white,e,3),(white,e,4),(white,e,5),(white,d,5),(white,c,5),(white,c,4),(black, d,2),(black, f,4), (black,d,6), (black, b,4), (black,b,2), (black,f,2),(black,f,6),(black,b,6)], d, 4, NewBoard).
 makemove(Color, Board, X, Y, [(Color, X, Y)|NewBoard]):-
-	%printBoard(Board),
 	validInput(Color, X, Y, Board),
 	legalmove(Color, Board, X, Y), 
 	getBricks((Color, X, Y), Board, AllBricks), 
 	flipMain(AllBricks, Board, NewBoard), !.
-	%printBoard(NewBoard), !.
 
 validInput(Color, X, Y, Board):-
 	char_type(X, alpha),

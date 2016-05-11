@@ -1,6 +1,4 @@
 :- [computeAdjacent, checkLegalMove, printBoard].
-settings:-
-set_prolog_flag(toplevel_print_options, [quoted(true), portray(true), max_depth(1000), priority(699)]).
 
 changeColor(white, black).
 changeColor(black, white).
