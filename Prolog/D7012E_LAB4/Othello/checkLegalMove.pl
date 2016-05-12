@@ -6,7 +6,7 @@ checkMain((C, X1, Y1), Board, [(C, X1, Y1)|NextBrick], Dir):-
 	checkMain((C1, X2, Y2), Board, NextBrick, Dir).
 
 checkMain((C, X1, Y1), Board, [(C, X1, Y1)], Dir):-
-	checkChain((C, X1, Y1), Board, (C1, X2, Y2), Dir),
+	checkChain((C, X1, Y1), Board, (C1, _, _), Dir),
 	C \= C1.
 
 checkMain((_, _, _), [], [], _).

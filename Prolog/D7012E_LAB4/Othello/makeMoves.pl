@@ -1,7 +1,6 @@
 :- [makeMove].
 
-makemoves(_, NewBoard, 0, [], NewBoard):-
-	printBoard(NewBoard),!.
+makemoves(_, NewBoard, 0, [], NewBoard).
 
 makemoves(Color, Board, N, [Move|Moves], NewBoard):-
 	N > 0,
@@ -11,8 +10,7 @@ makemoves(Color, Board, N, [Move|Moves], NewBoard):-
 	N2 is N-1,
 	makemoves(NextColor, NextBoard, N2, Moves, NewBoard).
 
-
-makeMovesMain(C, Board, [(X, Y)|OKMoves], (C, X, Y), NewBoard):-
+makeMovesMain(C, Board, [(X, Y)|_], (C, X, Y), NewBoard):-
 	makemove(C, Board, X, Y, NewBoard).
 
 makeMovesMain(C, Board, [], (C, n, n), Board).
@@ -21,18 +19,17 @@ makeMovesMain(C, Board, [], (C, n, n), Board).
 findMove(C, Board, OKMoves):-
 	findColorList(C, Board, ColorList),
 	findClose(Board, ColorList, All),
-	flatten(All, CheckMove), !,
+	flatten(All, CheckMove),
 	changeColor(C, C1),
-	printBoard(Board),
-	checkMoveMain(C1, Board, CheckMove, Move), !,
+	checkMoveMain(C1, Board, CheckMove, Move),!,
 	removeDuplicates(Move, OKMoves).
 
 %findStartMove(black, [(white,c,3),(white,d,3),(white,e,3),(white,e,4),(white,e,5),(white,d,5),(white,c,5),(white,c,4),(black, d,2),(black, f,4), (black,d,6), (black, b,4), (black,b,2), (black,f,2),(black,f,6),(black,b,6)], Startmove).
 findColorList(C, [(C1, X, Y)|Board], [(C1, X, Y)|ColorList]):-
 	C == C1,
-	findColorList(C, Board, ColorList),!.
+	findColorList(C, Board, ColorList).
 
-findColorList(C, [(C1, X, Y)|Board], ColorList):-
+findColorList(C, [_|Board], ColorList):-
 	findColorList(C, Board, ColorList).
 
 findColorList(_, [], []).
@@ -49,7 +46,7 @@ checkMoveMain(C, Board, [(X, Y, Dir)|CheckMove], [OKMove|Move]):-
 	checkMove((C, X, Y), Board, OKMove, Dir),
 	checkMoveMain(C, Board, CheckMove, Move).
 
-checkMoveMain(C, Board, [(X, Y, Dir)|CheckMove], Move):-
+checkMoveMain(C, Board, [_|CheckMove], Move):-
 	checkMoveMain(C, Board, CheckMove, Move).
 
 %left

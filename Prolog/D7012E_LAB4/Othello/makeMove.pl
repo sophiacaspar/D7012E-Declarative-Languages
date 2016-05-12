@@ -5,7 +5,7 @@ makemove(Color, Board, X, Y, [(Color, X, Y)|NewBoard]):-
 	validInput(Color, X, Y, Board),
 	legalmove(Color, Board, X, Y), 
 	getBricks((Color, X, Y), Board, AllBricks), 
-	flipMain(AllBricks, Board, NewBoard), !.
+	flipMain(AllBricks, Board, NewBoard),!.
 
 validInput(Color, X, Y, Board):-
 	char_type(X, alpha),
