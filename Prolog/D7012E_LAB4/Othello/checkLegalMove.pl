@@ -1,4 +1,5 @@
 :- [computeAdjacent].
+%%%%%%%%%%%% OLD FILE %%%%%%%%%%%%%%%
 
 checkMain((C, X1, Y1), Board, [(C, X1, Y1)|NextBrick], Dir):-
 	checkChain((C, X1, Y1), Board, (C1, X2, Y2), Dir),

@@ -1,10 +1,11 @@
 :- [computeAdjacent, checkLegalMove, printBoard].
+%%%%%%%%%%%% OLD FILE %%%%%%%%%%%%%%%
 
 changeColor(white, black).
 changeColor(black, white).
 
 %legalmove(black, [(white,c,3),(white,d,3),(white,e,3),(white,e,4),(white,e,5),(white,d,5),(white,c,5),(white,c,4),(black, d,2),(black, f,4), (black,d,6), (black, b,4), (black,b,2), (black,f,2),(black,f,6),(black,b,6)], b, 3).
-legalmove(Color, Board, X, Y):-
+legalmove(Color, Board, X, Y, Legal):-
 	checkCloseBricks(Color, Board, X, Y, StartBricks),!,
 	startChain(Color, Board, StartBricks, Legal), 
 	Legal \= [].

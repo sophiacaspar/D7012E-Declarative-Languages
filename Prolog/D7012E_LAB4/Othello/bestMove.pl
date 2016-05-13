@@ -1,4 +1,5 @@
 :- [makeMoves].
+%%%%%%%%%%%% OLD FILE %%%%%%%%%%%%%%%
 
 findbestmove(Color, Board, N, X, Y):-
 	findMove(Color, Board, OKMoves).
