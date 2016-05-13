@@ -1,23 +1,39 @@
-:- [findMove, legalMove, printBoard].
+:- [findMove, legalMove, printBoard, makeMove, makeMoves, bestMove].
 changeColor(white, black).
 changeColor(black, white).
-
-validInput(Color, X, Y, Board):-
-	char_type(X, alpha),
-	integer(Y),
-	char_code(X, ValueX),
-	char_code(a, A),
-	char_code(h, H),
-	ValueX =< H, 
-	ValueX >= A,
-	Y =< 8,
-	Y >= 1,
-	validColor(Color), 
-	Board \= [].
 
 validColor(Color):-
 	Color == black
 	;
 	Color == white.
 
-%legalmove(Color, Board, X, Y).
+
+validInput(C, X ,Y, Board):-
+	validColor(C),
+	Board \== [],
+	nonvar(X),
+	char_type(X, alpha),
+	integer(Y),
+	char_code(X,X1),
+	X1 < 105,
+	X1 > 96,
+	Y > 0,
+	Y < 9 
+	;
+	not(nonvar(X)),
+	integer(Y),
+	Y > 0,
+	Y < 9, 
+	Board \== []
+	;
+	not(nonvar(X)),
+	not(nonvar(Y)),
+	Board \== []
+	;
+	not(nonvar(Y)),
+	char_type(X, alpha),
+	char_code(X,X1),
+	X1 < 105,
+	X1 > 96,
+	Board \== [].
+
