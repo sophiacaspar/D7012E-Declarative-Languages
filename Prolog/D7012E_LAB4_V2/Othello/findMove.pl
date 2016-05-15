@@ -1,16 +1,22 @@
-:- [computeAdjacent].
+/*
+Finds spaces to place brick on,
+by checking all close bricks to each brick on board,
+and then looking for chains. 
+Stops when "end-brick" in chain is either other color, or not member to board.
+OK-moves are the end-bricks that are not member of board, but has valid chain.
+*/
 
 %findMove(black, [(white,c,3),(white,d,3),(white,e,3),(white,e,4),(white,e,5),(white,d,5),(white,c,5),(white,c,4),(black, d,2),(black, f,4), (black,d,6), (black, b,4), (black,b,2), (black,f,2),(black,f,6),(black,b,6)], Move).
 findMove(C, Board, OKMoves):-
-	%findColorList(C, Board, ColorList),
-	%findClose(Board, ColorList, All),
 	findClose(Board, Board, All),
 	flatten(All, CheckMove),
 	changeColor(C, C1),
 	checkMoveMain(C1, Board, CheckMove, Move),
 	removeDuplicates(Move, OKMoves).
 
-%findStartMove(black, [(white,c,3),(white,d,3),(white,e,3),(white,e,4),(white,e,5),(white,d,5),(white,c,5),(white,c,4),(black, d,2),(black, f,4), (black,d,6), (black, b,4), (black,b,2), (black,f,2),(black,f,6),(black,b,6)], Startmove).
+/*
+Gets all bricks on board with specific color.
+*/
 findColorList(C, [(C1, X, Y)|Board], [(C1, X, Y)|ColorList]):-
 	C == C1,
 	findColorList(C, Board, ColorList).
@@ -20,13 +26,19 @@ findColorList(C, [_|Board], ColorList):-
 
 findColorList(_, [], []).
 
+/*
+Gets all close bricks to start checking reverse-chain.
+*/
 findClose(_, [], []).
-findClose(Board, [(C, X, Y)|ColorList], [StartBricks|All]):-
+findClose(Board, [(C, X, Y)|AllBricks], [StartBricks|All]):-
 	checkCloseBricks(C, Board, X, Y, StartBricks),!,
-	findClose(Board, ColorList, All).
+	findClose(Board, AllBricks, All).
 
+/*
+Checks if the close bricks are opposite color and then places them in
+StartBrick-list. These are the possible starts of chains.
+*/
 checkCloseBricks(_, [], _, _, []).
-
 checkCloseBricks(Color, [(C1, X1, Y1)|Board], X, Y, [(X1, Y1, Trace)|StartBricks]):-
 	Color \= C1,
 	adjacent(X, X1, Y, Y1, Trace),
@@ -36,6 +48,10 @@ checkCloseBricks(Color, [(_, _, _)|Board], X, Y, StartBricks):-
 	checkCloseBricks(Color, Board, X, Y, StartBricks).
 
 
+/*
+Works like checkchain, but instead of looking for an opposite color on brick,
+it looks for an empty brick in the end of the chain.
+*/
 checkMoveMain(_, _, [], []).
 
 checkMoveMain(C, Board, [(X, Y, Dir)|CheckMove], [OKMove|Move]):-
@@ -45,6 +61,9 @@ checkMoveMain(C, Board, [(X, Y, Dir)|CheckMove], [OKMove|Move]):-
 checkMoveMain(C, Board, [_|CheckMove], Move):-
 	checkMoveMain(C, Board, CheckMove, Move).
 
+/*
+Check chains in each direction.
+*/
 %left
 checkMove((C, X1, Y1), Board, OKMove, left):-
 	validInput(C, X1, Y1, Board),
@@ -115,6 +134,9 @@ checkMove((C, X1, Y1), Board, (C1, X1, Y1), _):-
 	changeColor(C, C1),
 	\+member((_, X1, Y1), Board).
 
+/*
+Removes duplicates in list.
+*/
 removeDuplicates([], []).
 removeDuplicates([H|T], [H|T1]) :- subtract(T, [H], T2), removeDuplicates(T2, T1).
 

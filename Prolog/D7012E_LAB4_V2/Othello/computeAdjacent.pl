@@ -1,3 +1,7 @@
+/*
+Computes all adjacents in each direction.
+*/
+
 %! right
 adjacent(X1, X2, Y, Y, right):-
 	findRight(X1, X2).
