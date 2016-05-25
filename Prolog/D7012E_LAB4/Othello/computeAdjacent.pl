@@ -1,3 +1,40 @@
+/*
+Computes all adjacents in each direction.
+*/
+
+%! right
+adjacent(X1, X2, Y, Y, right):-
+	findRight(X1, X2).
+
+%! left
+adjacent(X1, X2, Y, Y, left):-
+	findLeft(X1, X2).
+
+%! up
+adjacent(X, X, Y1, Y2, up):-
+	findUp(Y1, Y2).
+
+%! down
+adjacent(X, X, Y1, Y2, down):-
+	findDown(Y1, Y2).
+
+%! left-up
+adjacent(X1, X2, Y1, Y2, leftUp):-
+	findLeftUp(X1, X2, Y1, Y2).
+
+%! right-up
+adjacent(X1, X2, Y1, Y2, rightUp):-
+	findRightUp(X1, X2, Y1, Y2).
+
+%! left-down
+adjacent(X1, X2, Y1, Y2, leftDown):-
+	findLeftDown(X1, X2, Y1, Y2).
+
+%! right-down
+adjacent(X1, X2, Y1, Y2, rightDown):-
+	findRightDown(X1, X2, Y1, Y2).
+
+
 
 findRight(X1, X2):-
 	char_code(X1, ValueX1),

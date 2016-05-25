@@ -1,4 +1,9 @@
 /*
+Borrowed from a friend, only for testing with graphical view of the board.
+*/
+
+
+/*
  Takes the list of a board and constructs
  a list of a elements for all coordinates.
  */
